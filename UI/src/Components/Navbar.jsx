@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { BrowserProvider } from 'ethers';
 
 
-const adminAddress = '0xE86d76ABE024F2f84D069113B6F5177c3894e9DA'; // Replace with actual admin address
+const adminAddress = '0xE86d76ABE024F2f84D069113B6F5177c3894e9DA';
 
 const Navbar = () => {
   const navigate = useNavigate(); 
@@ -40,7 +40,7 @@ const Navbar = () => {
             onClick={connectToMetamask}
             className="bg-gray-900 text-white py-2 px-6 shadow-md hover:shadow-lg transform hover:scale-105 transition-transform"
           >
-            Connect to MetaMask
+            Connect to MetaMask/Add course
           </button>
         </div>
       </div>
