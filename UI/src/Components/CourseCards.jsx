@@ -49,7 +49,7 @@ const CourseCards = () => {
   }, []);
 
   const handleBuyCourse = async (courseId) => {
-    if (buyingCourse === courseId) return; // Prevent duplicate purchase attempts
+    if (buyingCourse === courseId) return; 
 
     try {
       const { ethereum } = window;
@@ -122,7 +122,7 @@ const CourseCards = () => {
             <h2 className="text-xl font-bold mt-2">{course.name}</h2>
             <p className="text-sm text-gray-600">{course.provider}</p>
             <p className="text-gray-700 mt-2">{course.description}</p>
-            <p className="text-gray-900 mt-2 font-bold">
+            <p className="text-gray-900 mt-2 font-bold line-through">
               {course.realAmount ? ethers.formatEther(course.realAmount) : '0.00'} ETH
             </p>
             <p className="text-gray-900 mt-2 font-bold">
