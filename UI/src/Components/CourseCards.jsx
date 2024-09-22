@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
-import { useNavigate } from 'react-router-dom';
 import CoursePlatformArtifact from '../scdata/CoursePlatform.json';
 
 const CourseCards = () => {
@@ -12,8 +11,7 @@ const CourseCards = () => {
   const [newVideoDescription, setNewVideoDescription] = useState('');
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [buyingCourse, setBuyingCourse] = useState(null);
-  const navigate = useNavigate(); // Initialize the navigate function
-
+  
   const contractAddress = '0x8813c4F20a6b0E403276F10f444aaDC868c710CF';
 
   useEffect(() => {
@@ -67,7 +65,7 @@ const CourseCards = () => {
       setBuyingCourse(courseId);
       setLoading(true);
       const tx = await contract.buyCourse(courseId, {
-        value: ethers.parseUnits("0.01", "ether")
+        value: ethers.parseUnits("0.01", "ether") // Replace with actual price if needed
       });
 
       await tx.wait();
@@ -125,14 +123,17 @@ const CourseCards = () => {
             <p className="text-sm text-gray-600">{course.provider}</p>
             <p className="text-gray-700 mt-2">{course.description}</p>
             <p className="text-gray-900 mt-2 font-bold">
-              {ethers.formatEther(course.discountedAmount)} ETH
+              {course.realAmount ? ethers.formatEther(course.realAmount) : '0.00'} ETH
+            </p>
+            <p className="text-gray-900 mt-2 font-bold">
+              {course.discountedAmount ? ethers.formatEther(course.discountedAmount) : '0.00'} ETH
             </p>
 
             {isAdmin ? (
               <>
                 <button
                   onClick={() => setSelectedCourse(course.id)}
-                  className="mt-4 bg-green-500 text-white px-4 py-2 rounded"
+                  className="mt-4 bg-black text-white px-4 py-2 rounded"
                 >
                   Add Video
                 </button>
@@ -155,7 +156,7 @@ const CourseCards = () => {
                     />
                     <button
                       onClick={handleUploadVideo}
-                      className="mt-2 bg-blue-500 text-white px-4 py-2 rounded"
+                      className="mt-2 bg-gray-900 text-white px-4 py-2 rounded"
                       disabled={uploadingVideo[course.id]}
                     >
                       {uploadingVideo[course.id] ? 'Uploading...' : 'Upload Video'}
@@ -164,22 +165,13 @@ const CourseCards = () => {
                 )}
               </>
             ) : (
-              <>
-                <button
-                  onClick={() => handleBuyCourse(course.id)}
-                  className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
-                  disabled={loading || buyingCourse === course.id}
-                >
-                  {loading && buyingCourse === course.id ? 'Processing...' : 'Buy Course'}
-                </button>
-
-                <button
-                  onClick={() => navigate(`/course-videos/${course.id}`)}
-                  className="mt-4 bg-purple-500 text-white px-4 py-2 rounded"
-                >
-                  Show Videos
-                </button>
-              </>
+              <button
+                onClick={() => handleBuyCourse(course.id)}
+                className="mt-4 bg-black text-white px-4 py-2 rounded"
+                disabled={loading || buyingCourse === course.id}
+              >
+                {loading && buyingCourse === course.id ? 'Processing...' : 'Buy Course'}
+              </button>
             )}
           </div>
         ))}

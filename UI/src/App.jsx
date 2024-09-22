@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';  // Ensure BrowserRouter is imported
-import Cart from './Pages/Cart';
 import CreateCourse from './Pages/CreateCourse';
 
 import Mainpage from './Pages/Mainpage';
 import CourseVideos from './Pages/CourseVideos';
 import PurchaseForm from './Pages/PurchaseForm';
+import OrderListPage from './Pages/OrderListPage';
 
 
 const App = () => {
@@ -14,7 +14,8 @@ const App = () => {
             
             <Routes>
                 
-                <Route path="/cart" element={<Cart />} />
+           
+            <Route path="/orders" element={<OrderListPage />} />
                 <Route path="/" element={<Mainpage />} />
                 <Route path="/create-course" element={<CreateCourse />} />
                 {/* <Route path="/course/:id" element={<CoursePage />} />
