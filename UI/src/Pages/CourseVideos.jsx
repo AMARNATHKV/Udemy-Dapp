@@ -65,7 +65,7 @@ const CourseVideos = () => {
                 />
                 Your browser does not support the video tag.
               </video>
-              <p className="p-2 text-sm text-gray-600">{video.videoDescription}</p>
+              <p className="p-2 text-sm font-bold text-gray-600">{video.videoDescription}</p>
             </div>
           ))}
         </div>
