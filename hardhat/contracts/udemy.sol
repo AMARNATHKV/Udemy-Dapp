@@ -1,7 +1,12 @@
-// SPDX-License-Identifier MIT
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
 contract CoursePlatform {
+    struct Video {
+        string videoHash;
+        string videoDescription;
+    }
+
     struct Course {
         uint id;
         string name;
@@ -11,7 +16,7 @@ contract CoursePlatform {
         uint realAmount;
         uint discountedAmount;
         address payable instructor;
-        string[] videoHashes; // Array of IPFS hashes for videos
+        Video[] videos; // Array of Video structs for IPFS hashes and descriptions
     }
 
     struct Certificate {
@@ -25,7 +30,7 @@ contract CoursePlatform {
     mapping(uint => Course) public courses;
     mapping(address => mapping(uint => bool)) public coursePurchased; // Keeps track of who purchased what course
     mapping(address => mapping(uint => bool)) public courseCompleted; // Keeps track of course completion
-    mapping(address => mapping(uint => Certificate)) public certificates; // Keeps track of certificates for users
+    mapping(string => mapping(uint => Certificate)) public certificatesByUserId; // Keeps track of certificates using user IDs
 
     uint public courseCount = 0;
     address public owner;
@@ -41,9 +46,10 @@ contract CoursePlatform {
         address instructor
     );
 
+    event VideoAdded(uint courseId, string videoHash, string videoDescription);
     event CoursePurchased(address user, uint courseId);
     event CourseCompleted(address user, uint courseId);
-    event CertificateIssued(address user, uint courseId, string studentName);
+    event CertificateIssued(string userId, uint courseId, string studentName);
 
     modifier onlyOwner() {
         require(msg.sender == owner, "Not the contract owner");
@@ -70,27 +76,27 @@ contract CoursePlatform {
     ) public onlyOwner {
         courseCount++;
 
-        // Initialize an empty array of strings for videoHashes
-        string[] memory emptyVideoHashes;
+        // Initialize the course in storage first
+        Course storage newCourse = courses[courseCount];
 
-        courses[courseCount] = Course(
-            courseCount, 
-            _name, 
-            _provider, 
-            _description,
-            _imageHash, // Store imageHash
-            _realAmount, 
-            _discountedAmount, 
-            payable(msg.sender), 
-            emptyVideoHashes // Correctly initializing the empty array here
-        );
+        newCourse.id = courseCount;
+        newCourse.name = _name;
+        newCourse.provider = _provider;
+        newCourse.description = _description;
+        newCourse.imageHash = _imageHash; // Store imageHash
+        newCourse.realAmount = _realAmount;
+        newCourse.discountedAmount = _discountedAmount;
+        newCourse.instructor = payable(msg.sender); // Set the course instructor
 
         emit CourseCreated(courseCount, _name, _provider, _description, _imageHash, _realAmount, _discountedAmount, msg.sender);
     }
 
-    // Admin (owner) can add videos to a specific course by providing IPFS hashes
-    function addVideoToCourse(uint _courseId, string memory _videoHash) public onlyOwner courseExists(_courseId) {
-        courses[_courseId].videoHashes.push(_videoHash);
+    // Admin (owner) can add videos to a specific course by providing IPFS hashes and descriptions
+    function addVideoToCourse(uint _courseId, string memory _videoHash, string memory _videoDescription) public onlyOwner courseExists(_courseId) {
+        Video memory newVideo = Video(_videoHash, _videoDescription);
+        courses[_courseId].videos.push(newVideo);
+
+        emit VideoAdded(_courseId, _videoHash, _videoDescription);
     }
 
     // Users can buy courses by paying the discounted amount
@@ -118,8 +124,9 @@ contract CoursePlatform {
         emit CourseCompleted(msg.sender, _courseId);
     }
 
-    // Admin (owner) issues a certificate to the user after course completion
+    // Admin (owner) issues a certificate to the user by their ID after course completion
     function issueCertificate(
+        string memory _userId, 
         uint _courseId, 
         string memory _studentName
     ) public onlyOwner courseExists(_courseId) {
@@ -133,15 +140,15 @@ contract CoursePlatform {
             studentAddress: msg.sender
         });
 
-        certificates[msg.sender][_courseId] = certificate;
+        certificatesByUserId[_userId][_courseId] = certificate;
 
-        emit CertificateIssued(msg.sender, _courseId, _studentName);
+        emit CertificateIssued(_userId, _courseId, _studentName);
     }
 
-    // Get video hashes for a course (Only if the course is purchased)
-    function getCourseVideos(uint _courseId) public view returns (string[] memory) {
+    // Get video hashes and descriptions for a course (Only if the course is purchased)
+    function getCourseVideos(uint _courseId) public view returns (Video[] memory) {
         require(coursePurchased[msg.sender][_courseId], "You need to buy the course first");
-        return courses[_courseId].videoHashes;
+        return courses[_courseId].videos;
     }
 
     // Get course information including image hash
@@ -166,9 +173,9 @@ contract CoursePlatform {
         );
     }
 
-    // Get certificate for a user after completing a course
-    function getCertificate(uint _courseId) public view returns (Certificate memory) {
-        require(certificates[msg.sender][_courseId].issued, "No certificate issued yet");
-        return certificates[msg.sender][_courseId];
+    // Get certificate for a user using their user ID after completing a course
+    function getCertificate(string memory _userId, uint _courseId) public view returns (Certificate memory) {
+        require(certificatesByUserId[_userId][_courseId].issued, "No certificate issued yet");
+        return certificatesByUserId[_userId][_courseId];
     }
 }

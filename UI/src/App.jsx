@@ -5,6 +5,7 @@ import CreateCourse from './Pages/CreateCourse';
 
 import Mainpage from './Pages/Mainpage';
 import CourseVideos from './Pages/CourseVideos';
+import PurchaseForm from './Pages/PurchaseForm';
 
 
 const App = () => {
@@ -19,6 +20,7 @@ const App = () => {
                 {/* <Route path="/course/:id" element={<CoursePage />} />
                 <Route path="/certificate/:courseId" element={<CertificatePage />} /> */}
                <Route path="/course-videos/:courseId" element={<CourseVideos />} />
+               <Route path="/purchase/:courseId" element={<PurchaseForm />} />
             </Routes>
         </Router>
     );
