@@ -4,7 +4,7 @@ import cover from '../assets/Images/cover.gif'
 const Cover = () => {
   return (
     <>
-    <div className="w-full h-96 overflow-hidden"> {/* Adjust height as needed with Tailwind's height utilities */}
+    <div className="w-full h-96 overflow-hidden">
       <img src={cover} alt="Cover Image" className="w-full h-full object-cover" />
     </div>
 

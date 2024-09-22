@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { BrowserProvider } from 'ethers';
 
-const adminAddress = '0xE86d76ABE024F2f84D069113B6F5177c3894e9DA'; // Admin's Ethereum address
+const adminAddress = '0xE86d76ABE024F2f84D069113B6F5177c3894e9DA'; 
 
 const Navbar = () => {
-  const [isAdmin, setIsAdmin] = useState(false); // Track if the user is an admin
-  const [isConnected, setIsConnected] = useState(false); // Track if MetaMask is connected
+  const [isAdmin, setIsAdmin] = useState(false); 
+  const [isConnected, setIsConnected] = useState(false); 
   const [userAddress, setUserAddress] = useState('');
   const navigate = useNavigate();
   const provider = new BrowserProvider(window.ethereum);
@@ -42,7 +42,6 @@ const Navbar = () => {
       const address = await signer.getAddress();
       setUserAddress(address);
 
-      // Redirect based on the user's role
       if (address.toLowerCase() === adminAddress.toLowerCase()) {
         navigate('/create-course');
       } else {
@@ -67,11 +66,11 @@ const Navbar = () => {
           </button>
           <div className="flex space-x-4">
             {!isAdmin && isConnected && (
-              // Show "My Orders" link only if the user is not the admin and MetaMask is connected
+             
               <Link to="/orders" className="bg-gray-900 text-white py-2 px-6 shadow-md hover:shadow-lg transform hover:scale-105 transition-transform">My Orders</Link>
             )}
             {isAdmin && (
-              // Show "Create Course" button only if the user is an admin
+              
               <Link to="/create-course" className="bg-black text-white py-2 px-6 shadow-md hover:shadow-lg transform hover:scale-105 transition-transform">Create Course</Link>
             )}
           </div>

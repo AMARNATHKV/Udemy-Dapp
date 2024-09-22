@@ -65,7 +65,7 @@ const CourseCards = () => {
       setBuyingCourse(courseId);
       setLoading(true);
       const tx = await contract.buyCourse(courseId, {
-        value: ethers.parseUnits("0.01", "ether") // Replace with actual price if needed
+        value: ethers.parseUnits("0.01", "ether") 
       });
 
       await tx.wait();
@@ -96,7 +96,7 @@ const CourseCards = () => {
       const tx = await contract.addVideoToCourse(selectedCourse, newVideoHash, newVideoDescription);
       await tx.wait();
 
-      // Clear the input and reset the selected course
+      
       setNewVideoHash('');
       setNewVideoDescription('');
       setSelectedCourse(null);
@@ -123,10 +123,10 @@ const CourseCards = () => {
             <p className="text-sm text-gray-600">{course.provider}</p>
             <p className="text-gray-700 mt-2">{course.description}</p>
             <p className="text-gray-900 mt-2 font-bold line-through">
-              {course.realAmount ? ethers.formatEther(course.realAmount) : '0.00'} ETH
+            {course.realAmount ? ethers.formatEther(course.realAmount) : '0.00'} ETH
             </p>
             <p className="text-gray-900 mt-2 font-bold">
-              {course.discountedAmount ? ethers.formatEther(course.discountedAmount) : '0.00'} ETH
+             {course.discountedAmount ? ethers.formatEther(course.discountedAmount) : '0.00'} ETH
             </p>
 
             {isAdmin ? (

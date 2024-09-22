@@ -8,8 +8,7 @@ const OrderListPage = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const contractAddress = '0x8813c4F20a6b0E403276F10f444aaDC868c710CF'; // Replace with your contract address
-
+  const contractAddress = '0x8813c4F20a6b0E403276F10f444aaDC868c710CF'; 
   useEffect(() => {
     const fetchPurchasedCourses = async () => {
       try {

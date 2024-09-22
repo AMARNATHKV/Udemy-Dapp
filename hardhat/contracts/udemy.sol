@@ -12,11 +12,11 @@ contract CoursePlatform {
         string name;
         string provider;
         string description;
-        string imageHash; // IPFS hash for course thumbnail/image
+        string imageHash;
         uint realAmount;
         uint discountedAmount;
         address payable instructor;
-        Video[] videos; // Array of Video structs for IPFS hashes and descriptions
+        Video[] videos; 
     }
 
     struct Certificate {
@@ -28,9 +28,9 @@ contract CoursePlatform {
     }
 
     mapping(uint => Course) public courses;
-    mapping(address => mapping(uint => bool)) public coursePurchased; // Keeps track of who purchased what course
-    mapping(address => mapping(uint => bool)) public courseCompleted; // Keeps track of course completion
-    mapping(string => mapping(uint => Certificate)) public certificatesByUserId; // Keeps track of certificates using user IDs
+    mapping(address => mapping(uint => bool)) public coursePurchased; 
+    mapping(address => mapping(uint => bool)) public courseCompleted; 
+    mapping(string => mapping(uint => Certificate)) public certificatesByUserId; 
 
     uint public courseCount = 0;
     address public owner;
@@ -62,36 +62,36 @@ contract CoursePlatform {
     }
 
     constructor() {
-        owner = msg.sender; // The deployer is set as the owner/admin
+        owner = msg.sender; 
     }
 
-    // Admin (owner) can create courses
+   
     function createCourse(
         string memory _name, 
         string memory _provider,
         string memory _description,
-        string memory _imageHash, // IPFS hash for the course thumbnail/image
+        string memory _imageHash, 
         uint _realAmount, 
         uint _discountedAmount
     ) public onlyOwner {
         courseCount++;
 
-        // Initialize the course in storage first
+        
         Course storage newCourse = courses[courseCount];
 
         newCourse.id = courseCount;
         newCourse.name = _name;
         newCourse.provider = _provider;
         newCourse.description = _description;
-        newCourse.imageHash = _imageHash; // Store imageHash
+        newCourse.imageHash = _imageHash;
         newCourse.realAmount = _realAmount;
         newCourse.discountedAmount = _discountedAmount;
-        newCourse.instructor = payable(msg.sender); // Set the course instructor
+        newCourse.instructor = payable(msg.sender); 
 
         emit CourseCreated(courseCount, _name, _provider, _description, _imageHash, _realAmount, _discountedAmount, msg.sender);
     }
 
-    // Admin (owner) can add videos to a specific course by providing IPFS hashes and descriptions
+    
     function addVideoToCourse(uint _courseId, string memory _videoHash, string memory _videoDescription) public onlyOwner courseExists(_courseId) {
         Video memory newVideo = Video(_videoHash, _videoDescription);
         courses[_courseId].videos.push(newVideo);
@@ -145,13 +145,12 @@ contract CoursePlatform {
         emit CertificateIssued(_userId, _courseId, _studentName);
     }
 
-    // Get video hashes and descriptions for a course (Only if the course is purchased)
     function getCourseVideos(uint _courseId) public view returns (Video[] memory) {
         require(coursePurchased[msg.sender][_courseId], "You need to buy the course first");
         return courses[_courseId].videos;
     }
 
-    // Get course information including image hash
+    
     function getCourse(uint _courseId) public view courseExists(_courseId) returns (
         string memory name,
         string memory provider,
@@ -173,7 +172,7 @@ contract CoursePlatform {
         );
     }
 
-    // Get certificate for a user using their user ID after completing a course
+   
     function getCertificate(string memory _userId, uint _courseId) public view returns (Certificate memory) {
         require(certificatesByUserId[_userId][_courseId].issued, "No certificate issued yet");
         return certificatesByUserId[_userId][_courseId];

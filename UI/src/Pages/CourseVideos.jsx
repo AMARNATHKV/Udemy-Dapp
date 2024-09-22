@@ -4,11 +4,11 @@ import CoursePlatformArtifact from '../scdata/CoursePlatform.json';
 import { useParams } from 'react-router-dom';
 
 const CourseVideos = () => {
-  const { courseId } = useParams(); // Get courseId from URL
+  const { courseId } = useParams(); 
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [courseName, setCourseName] = useState(''); // State for course name
-  const [error, setError] = useState(''); // State for error handling
+  const [courseName, setCourseName] = useState(''); 
+  const [error, setError] = useState(''); 
 
   const contractAddress = '0x8813c4F20a6b0E403276F10f444aaDC868c710CF';
 
