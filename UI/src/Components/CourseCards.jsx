@@ -99,7 +99,6 @@ const CourseCards = () => {
       await tx.wait();
 
       // Clear the input and reset the selected course
-      // Clear the input and reset the selected course
       setNewVideoHash('');
       setNewVideoDescription('');
       setSelectedCourse(null);
@@ -182,26 +181,6 @@ const CourseCards = () => {
                 </button>
               </>
             )}
-
-            {/* Render videos if they are available for this course */}
-{videos[course.id] && (
-  <div className="mt-4">
-    
-    <h3 className="font-bold text-lg">Course Videos:</h3>
-    {videos[course.id].map((videoHash, videoIndex) => (
-      <div key={videoIndex} className="mt-2">
-        <video width="100%" height="auto" controls>
-          <source
-            src={`https://ipfs.io/ipfs/${videoHash}`}
-            type="video/mp4"
-          />
-          Your browser does not support the video tag.
-        </video>
-      </div>
-    ))}
-  </div>
-)}
-
           </div>
         ))}
       </div>
