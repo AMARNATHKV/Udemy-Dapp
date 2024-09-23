@@ -30,7 +30,7 @@ const Certificate = () => {
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="p-10 bg-white rounded-lg shadow-lg max-w-3xl w-full">
         <div className="border-4 border-gray-300 p-8 rounded-lg">
-          <h1 className="text-5xl font-extrabold mb-6 text-green-600">Certificate of Completion</h1>
+          <h1 className="text-5xl font-extrabold mb-6 text-gray-900">Certificate of Completion</h1>
           <p className="text-xl mb-4">This is to certify that you have successfully completed the course:</p>
           <h2 className="text-3xl font-bold mt-4 text-gray-700">{courseName}</h2>
           <p className="text-lg mt-4 text-gray-500">Provided by: <span className="font-semibold">{providerName}</span></p>

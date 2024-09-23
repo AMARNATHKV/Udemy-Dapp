@@ -74,7 +74,7 @@ const OrderListPage = () => {
             </p>
             <button
               onClick={() => navigate(`/course-videos/${course.id}`)}
-              className="mt-4 bg-purple-500 text-white px-4 py-2 rounded"
+              className="mt-4 bg-black text-white px-4 py-2 rounded"
             >
               View Course Videos
             </button>

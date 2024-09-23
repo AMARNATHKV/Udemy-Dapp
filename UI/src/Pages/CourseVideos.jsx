@@ -64,7 +64,7 @@ const CourseVideos = () => {
           </div>
           <button
             onClick={completeCourse}
-            className="mt-8 px-6 py-3 bg-black text-white font-semibold rounded-lg shadow hover:bg-green-600"
+            className="mt-8 px-6 py-3 bg-black text-white font-semibold rounded-lg shadow hover:bg-gray-900"
           >
             Complete Course
           </button>
