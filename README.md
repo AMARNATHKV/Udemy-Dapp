@@ -58,10 +58,9 @@ Before running the project, ensure that you have the following set up:
 ### 3. Set Environment Variables:
 
 In the root directory, create a .env file:
-
-INFURA_SEPOLIA_URL=https://sepolia.infura.io/v3/YOUR_PROJECT_ID
-
-ACCOUNT_PRIVATE_KEY=YOUR_PRIVATE_KEY
+    ```bash
+    INFURA_SEPOLIA_URL=https://sepolia.infura.io/v3/YOUR_PROJECT_ID
+    ACCOUNT_PRIVATE_KEY=YOUR_PRIVATE_KEY
 
 In the ui folder, create a .env file for IPFS or Pinata (if needed):
 
@@ -72,11 +71,12 @@ PINATA_SECRET_API_KEY=your_secret_api_key
 
 Navigate to the ui folder and start the development server:
 
-```bash
-Copy code
-cd ui
-npm run dev
-Usage
+    ```bash
+    Copy code
+    cd ui
+    npm run dev
+
+### Usage
 Buy Courses: Connect your MetaMask wallet, browse courses, and purchase the desired course using Ethereum.
 View Course Videos: After purchasing, navigate to the course video page to view all the course content.
 Complete Course: Once all videos are watched, mark the course as completed and claim your certificate.
