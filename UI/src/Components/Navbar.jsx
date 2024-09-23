@@ -10,7 +10,7 @@ const Navbar = () => {
   const [userAddress, setUserAddress] = useState('');
   const navigate = useNavigate();
 
-  // Function to check if the user is an admin
+
   async function checkAdminStatus(address) {
     if (address.toLowerCase() === adminAddress.toLowerCase()) {
       setIsAdmin(true);
@@ -19,13 +19,13 @@ const Navbar = () => {
     }
   }
 
-  // Function to handle connection to MetaMask
+  
   async function connectToMetamask() {
     try {
       if (!isConnected) {
-        // Create a new provider
+       
         const provider = new BrowserProvider(window.ethereum);
-        // Request MetaMask to connect
+        
         await window.ethereum.request({ method: 'eth_requestAccounts' });
         
         const signer = await provider.getSigner();
@@ -33,10 +33,10 @@ const Navbar = () => {
         setUserAddress(address);
         setIsConnected(true);
         
-        // Check if the user is an admin
+        
         await checkAdminStatus(address);
         
-        // Navigate to "Create Course" page if the user is an admin and they are connecting for the first time
+        
         if (address.toLowerCase() === adminAddress.toLowerCase()) {
           navigate('/create-course');
         }
@@ -46,7 +46,7 @@ const Navbar = () => {
     }
   }
 
-  // Check if MetaMask is already connected on page load
+ 
   useEffect(() => {
     async function loadUser() {
       if (window.ethereum && window.ethereum.selectedAddress) {
@@ -56,7 +56,7 @@ const Navbar = () => {
         setUserAddress(address);
         setIsConnected(true);
 
-        // Check if the user is an admin
+       
         await checkAdminStatus(address);
       }
     }
