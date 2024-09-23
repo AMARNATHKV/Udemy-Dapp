@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ethers } from 'ethers';
-import contractAbi from '../scdata/CoursePlatform.json'; // Import ABI
+import contractAbi from '../scdata/CoursePlatform.json';
 
 const contractAddress = '0x8813c4F20a6b0E403276F10f444aaDC868c710CF'; 
 

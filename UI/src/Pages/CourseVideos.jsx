@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ethers } from 'ethers';
-import contractAbi from '../scdata/CoursePlatform.json'; // Import ABI
+import contractAbi from '../scdata/CoursePlatform.json';
 
 const contractAddress = '0x8813c4F20a6b0E403276F10f444aaDC868c710CF'; 
 
@@ -35,9 +35,9 @@ const CourseVideos = () => {
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
       const contract = new ethers.Contract(contractAddress, contractAbi.abi, signer);
-      const tx = await contract.completeCourse(courseId); // Call completeCourse function
+      const tx = await contract.completeCourse(courseId); 
       await tx.wait();
-      navigate(`/certificate/${courseId}`); // Navigate to certificate page after completion
+      navigate(`/certificate/${courseId}`);
     } catch (error) {
       console.error('Error completing course:', error);
     }
