@@ -58,6 +58,7 @@ Before running the project, ensure that you have the following set up:
 ### 3. Set Environment Variables:
 
 In the root directory, create a .env file:
+
     ```bash
      INFURA_SEPOLIA_URL=https://sepolia.infura.io/v3/YOUR_PROJECT_ID
      ACCOUNT_PRIVATE_KEY=YOUR_PRIVATE_KEY
@@ -71,7 +72,7 @@ PINATA_SECRET_API_KEY=your_secret_api_key
 
 Navigate to the ui folder and start the development server:
 
-    ```bash
+   
     Copy code
     cd ui
     npm run dev
