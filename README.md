@@ -49,26 +49,28 @@ Before running the project, ensure that you have the following set up:
 ## Installation
 
 ### 1. Clone the Repository:
+      ```bash
+      git clone https://github.com/your-repo/udemy-clone-dapp.git
 
-```bash
-git clone https://github.com/your-repo/udemy-clone-dapp.git
-
-2. Install Dependencies:
-```bash
-Copy code
-npm install
-3. Set Environment Variables:
+### 2. Install Dependencies:
+    ```bash
+    Copy code
+    npm install
+### 3. Set Environment Variables:
 In the root directory, create a .env file:
-```bash
-Copy code
+    ```bash
+   Copy code
 INFURA_SEPOLIA_URL=https://sepolia.infura.io/v3/YOUR_PROJECT_ID
 ACCOUNT_PRIVATE_KEY=YOUR_PRIVATE_KEY
+
 In the ui folder, create a .env file for IPFS or Pinata (if needed):
-```bash
-Copy code
+   ```bash
+    Copy code
 PINATA_API_KEY=your_api_key
 PINATA_SECRET_API_KEY=your_secret_api_key
-4. Run the Frontend:
+
+### 4. Run the Frontend:
+
 Navigate to the ui folder and start the development server:
 
 ```bash
