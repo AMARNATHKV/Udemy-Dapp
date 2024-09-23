@@ -38,7 +38,7 @@ const Navbar = () => {
         
         
         if (address.toLowerCase() === adminAddress.toLowerCase()) {
-          navigate('/create-course');
+          navigate('/');
         }
       }
     } catch (error) {
