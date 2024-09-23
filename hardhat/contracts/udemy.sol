@@ -99,32 +99,32 @@ contract CoursePlatform {
         emit VideoAdded(_courseId, _videoHash, _videoDescription);
     }
 
-    // Users can buy courses by paying the discounted amount
+
     function buyCourse(uint _courseId) public payable courseExists(_courseId) {
         Course memory course = courses[_courseId];
         require(msg.value >= course.discountedAmount, "Not enough ETH to purchase the course");
         require(!coursePurchased[msg.sender][_courseId], "Course already purchased");
 
-        // Mark course as purchased
+       
         coursePurchased[msg.sender][_courseId] = true;
-        // Transfer funds to the course instructor (admin)
+        
         course.instructor.transfer(msg.value);
 
         emit CoursePurchased(msg.sender, _courseId);
     }
 
-    // Users can mark a course as completed
+   
     function completeCourse(uint _courseId) public courseExists(_courseId) {
         require(coursePurchased[msg.sender][_courseId], "You need to buy the course first");
         require(!courseCompleted[msg.sender][_courseId], "Course already completed");
 
-        // Mark course as completed
+       
         courseCompleted[msg.sender][_courseId] = true;
 
         emit CourseCompleted(msg.sender, _courseId);
     }
 
-    // Admin (owner) issues a certificate to the user by their ID after course completion
+   
     function issueCertificate(
         string memory _userId, 
         uint _courseId, 
