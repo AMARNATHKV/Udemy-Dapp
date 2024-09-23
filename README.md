@@ -51,25 +51,26 @@ Before running the project, ensure that you have the following set up:
 ### 1. Clone the Repository:
 ```bash
 git clone https://github.com/your-repo/udemy-clone-dapp.git
+
 2. Install Dependencies:
-bash
+```bash
 Copy code
 npm install
 3. Set Environment Variables:
 In the root directory, create a .env file:
-bash
+```bash
 Copy code
 INFURA_SEPOLIA_URL=https://sepolia.infura.io/v3/YOUR_PROJECT_ID
 ACCOUNT_PRIVATE_KEY=YOUR_PRIVATE_KEY
 In the ui folder, create a .env file for IPFS or Pinata (if needed):
-bash
+```bash
 Copy code
 PINATA_API_KEY=your_api_key
 PINATA_SECRET_API_KEY=your_secret_api_key
 4. Run the Frontend:
 Navigate to the ui folder and start the development server:
 
-bash
+```bash
 Copy code
 cd ui
 npm run dev
@@ -78,6 +79,7 @@ Buy Courses: Connect your MetaMask wallet, browse courses, and purchase the desi
 View Course Videos: After purchasing, navigate to the course video page to view all the course content.
 Complete Course: Once all videos are watched, mark the course as completed and claim your certificate.
 Receive Certificate: The admin issues a blockchain-based certificate with the user's name upon course completion.
+
 ## 🎗️ Contributing
 Contributions are welcome! Feel free to fork the project and submit a pull request. Follow these steps to contribute:
 
