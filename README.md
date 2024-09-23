@@ -53,7 +53,8 @@ Before running the project, ensure that you have the following set up:
       git clone https://github.com/your-repo/udemy-clone-dapp.git
 
 ### 2. Install Dependencies:
-npm install
+    ```bash
+       npm install
 ### 3. Set Environment Variables:
 
 In the root directory, create a .env file:
