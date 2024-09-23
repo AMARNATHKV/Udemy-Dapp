@@ -59,14 +59,9 @@ Before running the project, ensure that you have the following set up:
 
 In the root directory, create a .env file:
 
-    ```bash
      INFURA_SEPOLIA_URL=https://sepolia.infura.io/v3/YOUR_PROJECT_ID
      ACCOUNT_PRIVATE_KEY=YOUR_PRIVATE_KEY
 
-In the ui folder, create a .env file for IPFS or Pinata (if needed):
-
-PINATA_API_KEY=your_api_key
-PINATA_SECRET_API_KEY=your_secret_api_key
 
 ### 4. Run the Frontend:
 
