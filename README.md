@@ -72,7 +72,7 @@ Navigate to the ui folder and start the development server:
     cd ui
     npm run dev
 
-### Usage
+## Usage
 Buy Courses: Connect your MetaMask wallet, browse courses, and purchase the desired course using Ethereum.
 View Course Videos: After purchasing, navigate to the course video page to view all the course content.
 Complete Course: Once all videos are watched, mark the course as completed and claim your certificate.
@@ -82,9 +82,14 @@ Receive Certificate: The admin issues a blockchain-based certificate with the us
 Contributions are welcome! Feel free to fork the project and submit a pull request. Follow these steps to contribute:
 
 Fork the Project.
+
 Create a Feature Branch (git checkout -b feature/<feature_name>).
+
 Commit your changes (git commit -m 'Add <feature_name>').
+
 Push to the branch (git push origin feature/<feature_name>).
+
 Open a Pull Request.
-📝 License
+
+### 📝 License
 This project is licensed under the MIT License. See the LICENSE file for more details.
