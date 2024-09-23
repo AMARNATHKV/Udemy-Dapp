@@ -53,14 +53,14 @@ Before running the project, ensure that you have the following set up:
       git clone https://github.com/your-repo/udemy-clone-dapp.git
 
 ### 2. Install Dependencies:
-    ```bash
+   
        npm install
 ### 3. Set Environment Variables:
 
 In the root directory, create a .env file:
     ```bash
-    INFURA_SEPOLIA_URL=https://sepolia.infura.io/v3/YOUR_PROJECT_ID
-    ACCOUNT_PRIVATE_KEY=YOUR_PRIVATE_KEY
+     INFURA_SEPOLIA_URL=https://sepolia.infura.io/v3/YOUR_PROJECT_ID
+     ACCOUNT_PRIVATE_KEY=YOUR_PRIVATE_KEY
 
 In the ui folder, create a .env file for IPFS or Pinata (if needed):
 
