@@ -1,76 +1,74 @@
 import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { ethers } from 'ethers';
-import CoursePlatformArtifact from '../scdata/CoursePlatform.json';
-import { useParams } from 'react-router-dom';
+import contractAbi from '../scdata/CoursePlatform.json'; // Import ABI
+
+const contractAddress = '0x8813c4F20a6b0E403276F10f444aaDC868c710CF'; 
 
 const CourseVideos = () => {
-  const { courseId } = useParams(); 
+  const { courseId } = useParams();
+  const navigate = useNavigate();
   const [videos, setVideos] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [courseName, setCourseName] = useState(''); 
-  const [error, setError] = useState(''); 
-
-  const contractAddress = '0x8813c4F20a6b0E403276F10f444aaDC868c710CF';
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchCourseVideosAndName = async () => {
-      try {
-        const { ethereum } = window;
-        if (!ethereum) {
-          throw new Error('Ethereum object not found, please install MetaMask.');
-        }
-
-        const provider = new ethers.BrowserProvider(ethereum);
-        const signer = await provider.getSigner();
-        const contract = new ethers.Contract(contractAddress, CoursePlatformArtifact.abi, signer);
-
-        // Fetch course details (including name)
-        const course = await contract.getCourse(courseId);
-        setCourseName(course.name);
-
-        // Fetch video hashes and descriptions for the course
-        const videoData = await contract.getCourseVideos(courseId);
-        setVideos(videoData);
-      } catch (error) {
-        console.error('Error fetching course videos:', error);
-        setError(error.message || 'An error occurred while fetching videos.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCourseVideosAndName();
+    loadCourseVideos();
   }, [courseId]);
 
-  if (loading) {
-    return <div>Loading videos...</div>;
-  }
+  const loadCourseVideos = async () => {
+    try {
+      setLoading(true);
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+      const contract = new ethers.Contract(contractAddress, contractAbi.abi, signer);
+      const courseVideos = await contract.getCourseVideos(courseId);
+      setVideos(courseVideos);
+    } catch (error) {
+      console.error('Error loading videos:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  if (error) {
-    return <div className="text-red-500">{error}</div>;
-  }
+  const completeCourse = async () => {
+    try {
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+      const contract = new ethers.Contract(contractAddress, contractAbi.abi, signer);
+      const tx = await contract.completeCourse(courseId); // Call completeCourse function
+      await tx.wait();
+      navigate(`/certificate/${courseId}`); // Navigate to certificate page after completion
+    } catch (error) {
+      console.error('Error completing course:', error);
+    }
+  };
 
   return (
-    <div>
-      <h1 className="font-bold text-2xl mb-4">{courseName}</h1>
-      <h2 className="font-bold text-lg mb-4">Course Videos</h2>
-      {videos.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {videos.map((video, videoIndex) => (
-            <div key={videoIndex} className="border rounded-lg overflow-hidden shadow-md">
-              <video width="100%" controls>
-                <source
-                  src={`https://ipfs.io/ipfs/${video.videoHash}`}
-                  type="video/mp4"
-                />
-                Your browser does not support the video tag.
-              </video>
-              <p className="p-2 text-sm font-bold text-gray-600">{video.videoDescription}</p>
-            </div>
-          ))}
-        </div>
+    <div className="p-4">
+      <h1 className="text-2xl font-bold mb-6">Course Videos</h1>
+      {loading ? (
+        <p>Loading videos...</p>
       ) : (
-        <p>No videos available for this course.</p>
+        <div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {videos.map((video, index) => (
+              <div key={index} className="mb-4">
+                <video
+                  controls
+                  src={`https://ipfs.io/ipfs/${video.videoHash}`}
+                  className="w-full h-48 object-cover rounded shadow-lg"
+                />
+                <p className="font-semibold mt-2">{video.videoDescription}</p>
+              </div>
+            ))}
+          </div>
+          <button
+            onClick={completeCourse}
+            className="mt-8 px-6 py-3 bg-black text-white font-semibold rounded-lg shadow hover:bg-green-600"
+          >
+            Complete Course
+          </button>
+        </div>
       )}
     </div>
   );
