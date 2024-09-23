@@ -49,6 +49,7 @@ Before running the project, ensure that you have the following set up:
 ## Installation
 
 ### 1. Clone the Repository:
+
 ```bash
 git clone https://github.com/your-repo/udemy-clone-dapp.git
 
