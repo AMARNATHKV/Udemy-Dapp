@@ -27,7 +27,7 @@ This decentralized application (dApp) is a Udemy clone built on the Ethereum blo
 - **Solidity**: Smart contracts for managing courses, purchases, and certificates.
 - **Ethereum**: Blockchain for smart contract deployment and transaction handling.
 - **Hardhat**: Ethereum development environment for compiling, testing, and deploying smart contracts.
-- **IPFS**: For decentralized video storage (can be integrated with services like Pinata).
+- **IPFS**: For decentralized image and video storage.
 
 ## 📝 Smart Contracts
 
