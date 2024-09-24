@@ -6,9 +6,11 @@ import { useNavigate } from 'react-router-dom';
 const OrderListPage = () => {
   const [purchasedCourses, setPurchasedCourses] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [completedCourses, setCompletedCourses] = useState({});
   const navigate = useNavigate();
 
   const contractAddress = '0x8813c4F20a6b0E403276F10f444aaDC868c710CF'; 
+
   useEffect(() => {
     const fetchPurchasedCourses = async () => {
       try {
@@ -20,23 +22,28 @@ const OrderListPage = () => {
 
         setLoading(true);
         const provider = new ethers.BrowserProvider(ethereum);
-        const contract = new ethers.Contract(contractAddress, CoursePlatformArtifact.abi, provider);
-
         const signer = await provider.getSigner();
-        const userAddress = await signer.getAddress();
+        const contract = new ethers.Contract(contractAddress, CoursePlatformArtifact.abi, signer);
 
+        const userAddress = await signer.getAddress();
         const courseCount = await contract.courseCount();
         const purchasedCourseArray = [];
+        const completedStatuses = {};
 
         for (let i = 1; i <= courseCount; i++) {
           const isPurchased = await contract.coursePurchased(userAddress, i);
           if (isPurchased) {
             const course = await contract.courses(i);
             purchasedCourseArray.push(course);
+
+            // Check if the course is completed
+            const isCompleted = await contract.courseCompleted(userAddress, i);
+            completedStatuses[course.id] = isCompleted;
           }
         }
 
         setPurchasedCourses(purchasedCourseArray);
+        setCompletedCourses(completedStatuses);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching purchased courses:', error);
@@ -78,6 +85,16 @@ const OrderListPage = () => {
             >
               View Course Videos
             </button>
+
+            {/* Right-aligned "View Certificate" button */}
+            {completedCourses[course.id] && (
+              <button
+                onClick={() => navigate(`/certificate/${course.id}`)}
+                className="mt-2 bg-gray-900 text-white px-4 py-2 rounded float-right"
+              >
+                View Certificate
+              </button>
+            )}
           </div>
         ))}
       </div>

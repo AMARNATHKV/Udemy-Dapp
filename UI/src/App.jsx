@@ -7,6 +7,7 @@ import OrderListPage from './Pages/OrderListPage';
 import Certificate from './Pages/Certificate';
 
 
+
 const App = () => {
     return (
         <Router>
@@ -19,7 +20,7 @@ const App = () => {
                 <Route path="/create-course" element={<CreateCourse />} />
                <Route path="/course-videos/:courseId" element={<CourseVideos />} />
                <Route path="/certificate/:courseId" element={<Certificate />} />
-               
+              
             </Routes>
         </Router>
     );
