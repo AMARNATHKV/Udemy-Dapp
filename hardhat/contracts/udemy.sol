@@ -65,7 +65,10 @@ contract CoursePlatform {
         owner = msg.sender; 
     }
 
-   
+   function getOwner() public view returns (address) {
+    return owner;
+}
+
     function createCourse(
         string memory _name, 
         string memory _provider,

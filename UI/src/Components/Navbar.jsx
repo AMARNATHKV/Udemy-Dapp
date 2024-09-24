@@ -1,73 +1,105 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { BrowserProvider } from 'ethers';
+import { Link } from 'react-router-dom';
+import { BrowserProvider, ethers } from 'ethers';
+import contractAbi from '../scdata/CoursePlatform.json';
 
-const adminAddress = '0xE86d76ABE024F2f84D069113B6F5177c3894e9DA';
+const contractAddress = '0x19eFa55C47FC9795894721718DCe4994A9749834';
 
 const Navbar = () => {
-  const [isAdmin, setIsAdmin] = useState(false); 
-  const [isConnected, setIsConnected] = useState(false); 
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isConnected, setIsConnected] = useState(false);
   const [userAddress, setUserAddress] = useState('');
-  const navigate = useNavigate();
+  const [adminAddress, setAdminAddress] = useState('');
 
 
-  async function checkAdminStatus(address) {
-    if (address.toLowerCase() === adminAddress.toLowerCase()) {
-      setIsAdmin(true);
-    } else {
-      setIsAdmin(false);
+  const fetchAdminAddress = async () => {
+    try {
+      const provider = new BrowserProvider(window.ethereum);
+      const contract = new ethers.Contract(contractAddress, contractAbi.abi, provider);
+      const ownerAddress = await contract.getOwner();
+      setAdminAddress(ownerAddress);
+      console.log("Admin Address fetched:", ownerAddress);
+    } catch (error) {
+      console.error('Error fetching admin address:', error);
     }
-  }
+  };
 
   
-  async function connectToMetamask() {
+  const checkAdminStatus = (address) => {
+    if (!address || !adminAddress) return;
+    setIsAdmin(address.toLowerCase() === adminAddress.toLowerCase());
+  };
+
+
+  const connectToMetamask = async () => {
     try {
-      if (!isConnected) {
-       
+      if (window.ethereum) {
         const provider = new BrowserProvider(window.ethereum);
-        
+       
         await window.ethereum.request({ method: 'eth_requestAccounts' });
-        
         const signer = await provider.getSigner();
         const address = await signer.getAddress();
         setUserAddress(address);
         setIsConnected(true);
-        
-        
-        await checkAdminStatus(address);
-        
-        
-        if (address.toLowerCase() === adminAddress.toLowerCase()) {
-          navigate('/');
-        }
+        checkAdminStatus(address); 
+      } else {
+        alert('MetaMask is not installed!');
       }
     } catch (error) {
       console.error('Error connecting to MetaMask:', error);
     }
-  }
+  };
 
  
   useEffect(() => {
-    async function loadUser() {
-      if (window.ethereum && window.ethereum.selectedAddress) {
-        const provider = new BrowserProvider(window.ethereum);
-        const signer = await provider.getSigner();
-        const address = await signer.getAddress();
-        setUserAddress(address);
-        setIsConnected(true);
+    if (window.ethereum) {
+      
+      window.ethereum.on('accountsChanged', (accounts) => {
+        if (accounts.length > 0) {
+          const newAddress = accounts[0];
+          setUserAddress(newAddress);
+          setIsConnected(true);
+          checkAdminStatus(newAddress); 
+        } else {
+         
+          setIsConnected(false);
+          setUserAddress('');
+        }
+      });
 
-       
-        await checkAdminStatus(address);
-      }
+      
+      window.ethereum.on('disconnect', () => {
+        setIsConnected(false);
+        setUserAddress('');
+      });
     }
-    loadUser();
+
+    return () => {
+      
+      if (window.ethereum) {
+        window.ethereum.removeListener('accountsChanged', () => {});
+        window.ethereum.removeListener('disconnect', () => {});
+      }
+    };
+  }, [adminAddress]); 
+
+  
+  useEffect(() => {
+    fetchAdminAddress();
   }, []);
+
+  
+  useEffect(() => {
+    if (adminAddress && userAddress) {
+      checkAdminStatus(userAddress);
+    }
+  }, [adminAddress, userAddress]);
 
   return (
     <nav className="bg-white shadow">
       <div className="container mx-auto px-6 py-3 flex justify-between items-center">
         <Link to="/" className="text-xl font-bold text-gray-900">Udemy Dapp</Link>
-        
+
         <div className="flex items-center space-x-4">
           <button
             onClick={connectToMetamask}

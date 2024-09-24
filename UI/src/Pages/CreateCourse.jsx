@@ -9,7 +9,7 @@ const CreateCourse = () => {
   const [imageHash, setImageHash] = useState('');
   const [realAmount, setRealAmount] = useState('');
   const [discountedAmount, setDiscountedAmount] = useState('');
-  const contractAddress = '0x8813c4F20a6b0E403276F10f444aaDC868c710CF'; 
+  const contractAddress = '0x19eFa55C47FC9795894721718DCe4994A9749834'; 
 
 
   const handleSubmit = async (e) => {
