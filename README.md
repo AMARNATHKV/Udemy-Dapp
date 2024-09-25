@@ -4,6 +4,12 @@
 
 This decentralized application (dApp) is a Udemy clone built on the Ethereum blockchain. It allows users to purchase courses, view course videos, complete courses, and receive certificates, all using their MetaMask wallet. Course data is stored in a decentralized manner, and certificates are issued via smart contracts, ensuring a secure, transparent, and decentralized learning experience.
 
+## 🎬 Demo Video
+
+See CertiHub in action! Click below to watch the live demo. ▶️
+
+https://youtu.be/jqfOK4XaGCs
+
 ## 📝 Key Features
 
 1. **Course Purchase**: Users can browse available courses and purchase them using Ethereum.
