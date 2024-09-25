@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ethers } from 'ethers';
 import contractAbi from '../scdata/CoursePlatform.json';
 
-const contractAddress = ' 0x19eFa55C47FC9795894721718DCe4994A9749834'; 
+const contractAddress = '0x19eFa55C47FC9795894721718DCe4994A9749834'; 
 
 const CourseVideos = () => {
   const { courseId } = useParams();
